@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="8dp">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/albumPreview"
+        android:layout_width="164dp"
+        android:layout_height="164dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintDimensionRatio="164:164"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Corner8DpImage" />
+
+    <Button
+        android:id="@+id/albumNumber"
+        android:layout_width="50dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:backgroundTint="#65000000"
+        android:clickable="false"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:textColor="#ffffff"
+        android:textSize="10sp"
+        android:textStyle="normal"
+        app:icon="@drawable/album_icon_pic"
+        app:iconGravity="textStart"
+        app:iconPadding="2dp"
+        app:iconSize="12dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@id/albumPreview"
+        app:layout_constraintTop_toTopOf="@id/albumPreview"
+        tools:text="1234" />
+
+
+    <TextView
+        android:id="@+id/albumTitle"
+        android:layout_width="152dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="6dp"
+        android:text="#相簿标签 #相簿标签 #哪家飛機餐最好吃 …"
+        android:textColor="#6157A9"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/albumPreview" />
+
+    <TextView
+        android:id="@+id/albumDate"
+        android:layout_width="88dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="2dp"
+        android:text="2023.03.25更新"
+        android:textAlignment="viewStart"
+        android:textColor="#909090"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="@+id/albumTitle"
+        app:layout_constraintTop_toBottomOf="@id/albumTitle" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
