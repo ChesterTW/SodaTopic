@@ -7,11 +7,11 @@
 
     <style name="Theme.SodaTopic" parent="Base.Theme.SodaTopic" />
 
-    <style name="LeftCorner8DpImage">
+    <style name="LeftCorner9DpImage">
         <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeTopLeft">9dp</item>
         <item name="cornerFamilyBottomRight">rounded</item>
-        <item name="cornerSizeBottomLeft">8dp</item>
+        <item name="cornerSizeBottomLeft">9dp</item>
     </style>
 
     <style name="Corner8DpImage">
