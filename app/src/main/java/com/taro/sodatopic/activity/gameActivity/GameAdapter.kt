@@ -13,14 +13,24 @@ import com.taro.sodatopic.databinding.RowGameBinding
 import com.taro.sodatopic.databinding.RowGameRecommandBinding
 import com.taro.sodatopic.model.CultureData
 
-class GameAdapter(var games: List<CultureData.Data>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GameAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object{
+        private const val VIEW_TYPE_FIRST = 1
+        private const val VIEW_TYPE_SECOND = 2
+    }
 
-    private var VIEW_TYPE_FIRST = 1
-    private var VIEW_TYPE_SECOND = 2
+
 
     override fun getItemViewType(position: Int): Int {
         /// 判斷是否為第一個 ROW，要提供 Recommend Game Row。
         return if(position == 0) VIEW_TYPE_FIRST else VIEW_TYPE_SECOND
+    }
+
+    private var mGames: List<CultureData.Data> = listOf()
+
+    fun setData(games: List<CultureData.Data>) {
+        mGames = games
+        notifyItemRangeChanged(0,games.size-1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,11 +51,11 @@ class GameAdapter(var games: List<CultureData.Data>) : RecyclerView.Adapter<Recy
     }
 
     override fun getItemCount(): Int {
-        return games.size
+        return mGames.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val data = games[position]
+        val data = mGames[position]
         when(holder){
             is RecommendViewHolder -> {
                 holder.bind(data)
@@ -57,51 +67,45 @@ class GameAdapter(var games: List<CultureData.Data>) : RecyclerView.Adapter<Recy
 
     }
 
+
+
     inner class RecommendViewHolder(view: View):RecyclerView.ViewHolder(view){
-        var binding = RowGameRecommandBinding.bind(view)
-        var titleText = binding.gameTitle
-        var describeText = binding.gameDescribe
-        var memberText = binding.gameMember
-        var button = binding.button
-        var gameImage = binding.gameImage
+        private val binding = RowGameRecommandBinding.bind(view)
 
         fun bind(data: CultureData.Data){
-            titleText.text = data.name
-            describeText.text = data.content
-            memberText.text = data.id.toString()
-            button.setOnClickListener(View.OnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data.link))
-                startActivity(itemView.context, intent, null)
 
-            })
-            Glide.with(itemView.context)
-                .load(data.images.first())
-                .into(gameImage)
+            with(binding){
+                gameTitle.text = data.name
+                gameDescribe.text = data.content
+                gameMember.text = data.id.toString()
+                button.setOnClickListener(View.OnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data.link))
+                    startActivity(itemView.context, intent, null)
+                })
+                Glide.with(itemView.context)
+                    .load(data.images.first())
+                    .into(gameImage)
+            }
 
         }
     }
 
     inner class NormalViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var binding = RowGameBinding.bind(view)
-        var titleText = binding.gameTitle
-        var describeText = binding.gameDescribe
-        var memberText = binding.gameMember
-        var button = binding.button
-        var gameImage = binding.gameImage
 
         fun bind(data: CultureData.Data){
-            titleText.text = data.name
-            describeText.text = data.content
-            memberText.text = data.id.toString()
-            button.setOnClickListener(View.OnClickListener {
-//                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(data.link)))
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data.link))
-                startActivity(itemView.context, intent, null)
-            })
-            Glide.with(itemView.context)
-                .load(data.images.first())
-                .into(gameImage)
-
+            with(binding){
+                gameTitle.text = data.name
+                gameDescribe.text = data.content
+                gameMember.text = data.id.toString()
+                button.setOnClickListener(View.OnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data.link))
+                    startActivity(itemView.context, intent, null)
+                })
+                Glide.with(itemView.context)
+                    .load(data.images.first())
+                    .into(gameImage)
+            }
         }
     }
 

@@ -25,11 +25,14 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class GameActivity : AppCompatActivity() {
+    companion object{
+        private val TAG = GameActivity::class.java.simpleName
+        private const val URL = "https://themedata.culture.tw/opendata/object/"
+    }
+
     private lateinit var binding: ActivityGameBinding
-    private val TAG = GameActivity::class.java.simpleName
     private lateinit var games: List<CultureData.Data>
 
-    private var URL = "https://themedata.culture.tw/opendata/object/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(URL)
@@ -37,37 +40,42 @@ class GameActivity : AppCompatActivity() {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
 
-    @SuppressLint("CheckResult")
+    private val gameService = retrofit.create(ApiService::class.java)
+
+    private val mAdapter = GameAdapter()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d(TAG, "onCreate: ")
+        recycler()
+        callApi(gameService)
 
-        val gameService = retrofit.create(ApiService::class.java)
+    }
 
+    @SuppressLint("CheckResult")
+    private fun callApi(gameService: ApiService) {
         gameService.listAlbums()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    games = it.data
                     Log.d(TAG, "onCreate: Request Success.")
-                    recycler()
-                },{
+                    mAdapter.setData(it.data)
+                }, {
                     Log.d(TAG, "onCreate: Request Error, Message: $it")
-                },{
+                }, {
                     Log.d(TAG, "onCreate: Request Completed.")
                 }
             )
-
     }
 
     private fun recycler() {
         binding.recycler.setHasFixedSize(true)
         binding.recycler.layoutManager = LinearLayoutManager(this)
-        binding.recycler.adapter = GameAdapter(games)
+        binding.recycler.adapter = GameAdapter()
     }
 
 
