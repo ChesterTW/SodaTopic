@@ -67,4 +67,9 @@ dependencies {
     // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
     implementation 'com.github.getActivity:ShapeDrawable:3.0'
 
+    //lifeCycle https://developer.android.com/jetpack/androidx/releases/lifecycle?hl=zh-tw
+    def lifecycle_version = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
 }

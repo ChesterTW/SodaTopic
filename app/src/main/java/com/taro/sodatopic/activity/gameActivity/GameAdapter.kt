@@ -1,7 +1,9 @@
 package com.taro.sodatopic.activity.gameActivity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +21,6 @@ class GameAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val VIEW_TYPE_SECOND = 2
     }
 
-
-
     override fun getItemViewType(position: Int): Int {
         /// 判斷是否為第一個 ROW，要提供 Recommend Game Row。
         return if(position == 0) VIEW_TYPE_FIRST else VIEW_TYPE_SECOND
@@ -28,9 +28,12 @@ class GameAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mGames: List<CultureData.Data> = listOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(games: List<CultureData.Data>) {
         mGames = games
-        notifyItemRangeChanged(0,games.size-1)
+        Log.d("DEBUG_ADAPTER", "${mGames.size}")
+        notifyDataSetChanged()
+//        notifyItemRangeChanged(0, mGames.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -51,6 +54,7 @@ class GameAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
+        Log.d("DEBUG_ADAPTER", "${mGames.size}")
         return mGames.size
     }
 
@@ -66,8 +70,6 @@ class GameAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
     }
-
-
 
     inner class RecommendViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = RowGameRecommandBinding.bind(view)
@@ -91,10 +93,11 @@ class GameAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     inner class NormalViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        var binding = RowGameBinding.bind(view)
+        private val binding = RowGameBinding.bind(view)
 
         fun bind(data: CultureData.Data){
             with(binding){
+                Log.d("DEBUG_ADAPTER", "BINDING")
                 gameTitle.text = data.name
                 gameDescribe.text = data.content
                 gameMember.text = data.id.toString()
